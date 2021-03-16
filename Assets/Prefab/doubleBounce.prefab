@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 990186775307347649}
   - component: {fileID: 3198426175384223313}
   m_Layer: 0
-  m_Name: normalBrick (1)
+  m_Name: doubleBounce
   m_TagString: brick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +91,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990186775307347651}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -110,3 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxbounces: 2
   score: 200
+  itemBigger: {fileID: 5187102237089496, guid: 326e68de0f2c7aa48a072049e16712b4, type: 3}
+  itemShot: {fileID: 5187102237089496, guid: 22c9764d8682d1c4ba3dd8359f8da1f2, type: 3}
+  itemSlowmo: {fileID: 5187102237089496, guid: 5b3bf58e52c53ca44b99eb7cb2485b2c, type: 3}
+  itemDropChance: 6

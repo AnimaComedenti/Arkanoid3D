@@ -9,8 +9,9 @@ TagManager:
   - topWall
   - outGoal
   - brick
-  - doubleBrick
   - itemBrick
+  - ball
+  - missle
   layers:
   - Default
   - TransparentFX

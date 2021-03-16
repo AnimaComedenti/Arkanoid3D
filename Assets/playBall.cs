@@ -8,18 +8,18 @@ public class playBall : MonoBehaviour
     private Vector3 velocity;
     public float maxX;
     public float maxZ;
+    public int duration;
     private bool gotOut;
     private float timer = 0.0f;
     private float timerMax = 1.0f;
 
     void Start()
     {
-        StartCoroutine(throwBall());
+        Invoke(nameof(throwBall),duration);
     }
 
-    IEnumerator throwBall()
+    void throwBall()
     {
-        yield return new WaitForSeconds(3);
         velocity = new Vector3(0, 0, -maxZ);
     }
 

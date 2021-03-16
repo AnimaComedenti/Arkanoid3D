@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3231024704694661767}
   - component: {fileID: 4750570684115390704}
   m_Layer: 0
-  m_Name: normalBrick (7)
+  m_Name: trippleBounce
   m_TagString: brick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,3 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxbounces: 3
   score: 300
+  itemBigger: {fileID: 5187102237089496, guid: 326e68de0f2c7aa48a072049e16712b4, type: 3}
+  itemShot: {fileID: 5187102237089496, guid: 22c9764d8682d1c4ba3dd8359f8da1f2, type: 3}
+  itemSlowmo: {fileID: 5187102237089496, guid: 5b3bf58e52c53ca44b99eb7cb2485b2c, type: 3}
+  itemDropChance: 6

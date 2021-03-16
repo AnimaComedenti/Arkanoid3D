@@ -7,6 +7,10 @@ public class brickster : MonoBehaviour
 {
     public int maxbounces;
     public int score;
+    public GameObject itemBigger;
+    public GameObject itemShot;
+    public GameObject itemSlowmo;
+    public int itemDropChance;
 
     private Color red;
     private Color magenta;
@@ -22,36 +26,56 @@ public class brickster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        maxbounces--;
-        Material material = GetComponent<Renderer>().material;
-        TextMesh scoreText = GameObject.Find("currentScore").GetComponent<TextMesh>();
-        string text = scoreText.text;
-        switch (maxbounces)
-        {
-            case 4: 
-                material.SetColor("_Color", magenta);
-                break;
-            case 3:
-                material.SetColor("_Color", red);
-                break;
-            case 2:
-                material.SetColor("_Color", yellow);
-                break;
-            case 1:
-                material.SetColor("_Color", Color.green);
-                break;
-            case 0:
 
-                /*TODO: Verschiebung nach dem Einfügen der Zahl*/
-                int result = Int32.Parse(text);
-                scoreText.text = "" + (result + score);
-                Destroy(gameObject);
-                break;
+        if(other.tag == "ball" || other.tag == "missle")
+        {
+            maxbounces--;
+            Material material = GetComponent<Renderer>().material;
+            TextMesh scoreText = GameObject.Find("currentScore").GetComponent<TextMesh>();
+            string text = scoreText.text;
+            switch (maxbounces)
+            {
+                case 4:
+                    material.SetColor("_Color", magenta);
+                    break;
+                case 3:
+                    material.SetColor("_Color", red);
+                    break;
+                case 2:
+                    material.SetColor("_Color", yellow);
+                    break;
+                case 1:
+                    material.SetColor("_Color", Color.green);
+                    break;
+                case 0:
+                    int result = Int32.Parse(text);
+                    scoreText.text = "" + (result + score);
+
+                    int randomeItem = UnityEngine.Random.Range(1, 4);
+                    int throwRnd = UnityEngine.Random.Range(1, itemDropChance);
+                    if (throwRnd == 1)
+                    {
+                        if (randomeItem == 1)
+                        {
+                            Instantiate(itemBigger,transform.position,Quaternion.identity);
+                        }
+                        else if(randomeItem == 2)
+                        {
+                            Instantiate(itemShot, transform.position, Quaternion.identity);
+                        }
+                        else
+                        {
+                            Instantiate(itemSlowmo,transform.position,Quaternion.identity);
+                        }
+                    }
+
+                    Destroy(gameObject);
+                    break;
+            }
         }
     }
 }
