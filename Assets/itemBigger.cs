@@ -33,6 +33,7 @@ public class itemBigger : MonoBehaviour
         if (tagname == "player")
         {
             player = other;
+            GetComponent<AudioSource>().Play();
             if ((player.transform.localScale.x+1) < (gameboard.transform.localScale.x * 10))
             {
                 player.transform.localScale = new Vector3(player.transform.localScale.x + scale, player.transform.localScale.y, player.transform.localScale.z);

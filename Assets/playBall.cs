@@ -6,17 +6,25 @@ using System;
 public class playBall : MonoBehaviour
 {
     private Vector3 velocity;
+    private AudioSource audio;
+    private bool gotOut;
+    private float timer = 0.0f;
+    private float timerMax = 1.0f;
+    private bool hitted;
+
     public float maxX;
     public float maxZ;
     public int duration;
     public GameObject gameover;
     public GameObject gamewon;
-    private bool gotOut;
-    private float timer = 0.0f;
-    private float timerMax = 1.0f;
-
+    public AudioClip hitwall;
+    public AudioClip hitbrick;
+    public AudioClip outOfField;
+    public GameObject mainMusik;
     void Start()
     {
+        audio = GetComponent<AudioSource>();
+        hitted = false;
         Invoke(nameof(throwBall),duration);
     }
 
@@ -32,6 +40,7 @@ public class playBall : MonoBehaviour
         if (GameObject.FindGameObjectsWithTag("brick").Length == 0)
         {
             gamewon.SetActive(true);
+            mainMusik.GetComponent<AudioSource>().volume = 0;
             Time.timeScale = 0;
             Destroy(gameObject);
         }
@@ -57,55 +66,73 @@ public class playBall : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         string tagname = other.tag;
-        if (tagname == "player")
+        hitted = true;
+        if (hitted)
         {
-            float maxdistanz = other.transform.localScale.x * 1 * 0.5f + transform.localScale.x * 1 * 0.5f;
-            float dist = transform.position.x - other.transform.position.x;
-            float ndist = dist / maxdistanz;
-
-            velocity = new Vector3(ndist * maxX, 0, -velocity.z);
-            GetComponent<AudioSource>().Play();
-        }
-        if (tagname == "wall")
-        {
-            velocity = new Vector3(velocity.x * -1f, 0, velocity.z);
-        }
-
-        if (tagname == "topWall")
-        {
-            velocity = new Vector3(velocity.x, 0, velocity.z* -1f);
-        }
-
-        if (tagname == "outGoal")
-        {
-            transform.position = new Vector3(0,0.5f,-2);
-            TextMesh liveText = GameObject.Find("currentLives").GetComponent<TextMesh>();
-            string text = liveText.text;
-            int result = Int32.Parse(text);
-            result--;
-            if(result >= 1)
+            if (tagname == "player")
             {
-              liveText.text = "" + result;
+                float maxdistanz = other.transform.localScale.x * 1 * 0.5f + transform.localScale.x * 1 * 0.5f;
+                float dist = transform.position.x - other.transform.position.x;
+                float ndist = dist / maxdistanz;
+
+                velocity = new Vector3(ndist * maxX, 0, -velocity.z);
+                audio.clip = hitbrick;
+                audio.volume = 0.2f;
+                audio.Play();
             }
-            else
+            if (tagname == "wall")
             {
-               liveText.text = "" + result;
-               gameover.SetActive(true);
-               Time.timeScale = 0;
+                velocity = new Vector3(velocity.x * -1f, 0, velocity.z);
+                audio.clip = hitwall;
+                audio.volume = 1;
+                audio.Play();
             }
-            gotOut = true;
+
+            if (tagname == "topWall")
+            {
+                velocity = new Vector3(velocity.x, 0, velocity.z * -1f);
+                audio.clip = hitwall;
+                audio.volume = 1;
+                audio.Play();
+            }
+
+            if (tagname == "outGoal")
+            {
+                transform.position = new Vector3(0, 0.5f, -2);
+                TextMesh liveText = GameObject.Find("currentLives").GetComponent<TextMesh>();
+                string text = liveText.text;
+                int result = Int32.Parse(text);
+                result--;
+                audio.clip = outOfField;
+                audio.volume = 1;
+                audio.Play();
+                if (result >= 1)
+                {
+                    liveText.text = "" + result;
+                }
+                else
+                {
+                    liveText.text = "" + result;
+                    gameover.SetActive(true);
+                    mainMusik.GetComponent<AudioSource>().volume = 0;
+                    Time.timeScale = 0;
+                }
+                gotOut = true;
+            }
+
+            if (tagname == "brick")
+            {
+                float maxdistanz = other.transform.localScale.x * 1 * 0.5f + transform.localScale.x * 1 * 0.5f;
+                float dist = transform.position.x - other.transform.position.x;
+                float ndist = dist / maxdistanz;
+
+                velocity = new Vector3(ndist * maxX, 0, -velocity.z);
+                audio.clip = hitbrick;
+                audio.volume = 0.2f;
+                audio.Play();
+            }
         }
-
-        if (tagname == "brick")
-        {
-            float maxdistanz = other.transform.localScale.x * 1 * 0.5f + transform.localScale.x * 1 * 0.5f;
-            float dist = transform.position.x - other.transform.position.x;
-            float ndist = dist / maxdistanz;
-
-            velocity = new Vector3(ndist * maxX, 0, -velocity.z);
-            GetComponent<AudioSource>().Play();
-        }
-
+        hitted = false;
     }
 }
 

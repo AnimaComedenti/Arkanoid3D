@@ -32,6 +32,7 @@ public class itemSlowmo : MonoBehaviour
         if (tagname == "player")
         {
             player = other;
+            GetComponent<AudioSource>().Play();
             Time.timeScale = 0.25f;
             Invoke(nameof(stopTime), duration * 0.25f);
             GetComponent<Renderer>().enabled = false;

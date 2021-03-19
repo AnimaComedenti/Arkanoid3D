@@ -28,6 +28,7 @@ public class itemShoot : MonoBehaviour
         }
         if (tagname == "player")
         {
+            GetComponent<AudioSource>().Play();
             TextMesh missleText = GameObject.Find("currentMissel").GetComponent<TextMesh>();
             string text = missleText.text;
             int result = Int32.Parse(text);

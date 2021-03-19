@@ -50,6 +50,7 @@ public class player : MonoBehaviour
                 Vector3 misslePosition = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
                 Instantiate(missle, misslePosition, Quaternion.identity);
                 missleText.text = "" + (result - 1);
+                GetComponent<AudioSource>().Play();
             }
         }
 

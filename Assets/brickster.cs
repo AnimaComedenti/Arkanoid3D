@@ -35,6 +35,7 @@ public class brickster : MonoBehaviour
         {
             if (other.tag == "missle")
             {
+                GetComponent<AudioSource>().Play();
                 maxbounces = maxbounces - 2; 
 
                 if (maxbounces-2 < 0)
