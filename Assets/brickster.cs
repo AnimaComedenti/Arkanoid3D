@@ -33,7 +33,21 @@ public class brickster : MonoBehaviour
 
         if(other.tag == "ball" || other.tag == "missle")
         {
-            maxbounces--;
+            if (other.tag == "missle")
+            {
+                maxbounces = maxbounces - 2; 
+
+                if (maxbounces-2 < 0)
+                {
+                    maxbounces = 0;
+                }
+
+            }
+            else
+            {
+                maxbounces--;
+            }
+        
             Material material = GetComponent<Renderer>().material;
             TextMesh scoreText = GameObject.Find("currentScore").GetComponent<TextMesh>();
             string text = scoreText.text;

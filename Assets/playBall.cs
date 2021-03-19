@@ -9,6 +9,8 @@ public class playBall : MonoBehaviour
     public float maxX;
     public float maxZ;
     public int duration;
+    public GameObject gameover;
+    public GameObject gamewon;
     private bool gotOut;
     private float timer = 0.0f;
     private float timerMax = 1.0f;
@@ -26,6 +28,14 @@ public class playBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (GameObject.FindGameObjectsWithTag("brick").Length == 0)
+        {
+            gamewon.SetActive(true);
+            Time.timeScale = 0;
+            Destroy(gameObject);
+        }
+
         if (!gotOut)
         {
             transform.position += velocity * Time.deltaTime;
@@ -73,13 +83,15 @@ public class playBall : MonoBehaviour
             string text = liveText.text;
             int result = Int32.Parse(text);
             result--;
-            if(result >= 0)
+            if(result >= 1)
             {
               liveText.text = "" + result;
             }
             else
             {
-                //Game Over
+               liveText.text = "" + result;
+               gameover.SetActive(true);
+               Time.timeScale = 0;
             }
             gotOut = true;
         }
@@ -91,7 +103,6 @@ public class playBall : MonoBehaviour
             float ndist = dist / maxdistanz;
 
             velocity = new Vector3(ndist * maxX, 0, -velocity.z);
-
             GetComponent<AudioSource>().Play();
         }
 
